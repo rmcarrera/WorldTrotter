@@ -74,7 +74,5 @@ class ConversionViewController : UIViewController, UITextFieldDelegate {
         } else {
             return true
         }
-        
-        return true
     }
 }
