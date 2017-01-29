@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5CAF43A91E3D775600CA38CE /* ConversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAF43A81E3D775600CA38CE /* ConversionViewController.swift */; };
 		5CC27E741E36E608009A51E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC27E731E36E608009A51E8 /* AppDelegate.swift */; };
-		5CC27E761E36E609009A51E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC27E751E36E609009A51E8 /* ViewController.swift */; };
 		5CC27E791E36E609009A51E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC27E771E36E609009A51E8 /* Main.storyboard */; };
 		5CC27E7B1E36E609009A51E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CC27E7A1E36E609009A51E8 /* Assets.xcassets */; };
 		5CC27E7E1E36E609009A51E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC27E7C1E36E609009A51E8 /* LaunchScreen.storyboard */; };
@@ -34,9 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5CAF43A81E3D775600CA38CE /* ConversionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionViewController.swift; sourceTree = "<group>"; };
 		5CC27E701E36E608009A51E8 /* WorldTrotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldTrotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CC27E731E36E608009A51E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5CC27E751E36E609009A51E8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5CC27E781E36E609009A51E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CC27E7A1E36E609009A51E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CC27E7D1E36E609009A51E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,11 +98,11 @@
 			isa = PBXGroup;
 			children = (
 				5CC27E731E36E608009A51E8 /* AppDelegate.swift */,
-				5CC27E751E36E609009A51E8 /* ViewController.swift */,
-				5CC27E771E36E609009A51E8 /* Main.storyboard */,
 				5CC27E7A1E36E609009A51E8 /* Assets.xcassets */,
 				5CC27E7C1E36E609009A51E8 /* LaunchScreen.storyboard */,
 				5CC27E7F1E36E609009A51E8 /* Info.plist */,
+				5CC27E771E36E609009A51E8 /* Main.storyboard */,
+				5CAF43A81E3D775600CA38CE /* ConversionViewController.swift */,
 			);
 			path = WorldTrotter;
 			sourceTree = "<group>";
@@ -259,7 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CC27E761E36E609009A51E8 /* ViewController.swift in Sources */,
+				5CAF43A91E3D775600CA38CE /* ConversionViewController.swift in Sources */,
 				5CC27E741E36E608009A51E8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +505,7 @@
 				5CC27E9A1E36E609009A51E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CC27E9B1E36E609009A51E8 /* Build configuration list for PBXNativeTarget "WorldTrotterTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +514,7 @@
 				5CC27E9D1E36E609009A51E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CC27E9E1E36E609009A51E8 /* Build configuration list for PBXNativeTarget "WorldTrotterUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +523,7 @@
 				5CC27EA01E36E609009A51E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
