@@ -56,6 +56,20 @@ class ConversionViewController : UIViewController, UITextFieldDelegate {
         updateCelsiusLabel()
     }
     
+    func getRandomColor() -> UIColor{
+        let rRed:CGFloat = CGFloat(drand48())
+        let rGreen:CGFloat = CGFloat(drand48())
+        let rBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: rRed, green: rGreen, blue: rBlue, alpha: 1.0)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //let hour = NSCalendar.current.component(.hour, from: NSDate() as Date)
+        view.backgroundColor = getRandomColor()
+    }
+    
+    
     let numberFormatter: NumberFormatter = {
         let nf = NumberFormatter()
         nf.numberStyle = .decimal
