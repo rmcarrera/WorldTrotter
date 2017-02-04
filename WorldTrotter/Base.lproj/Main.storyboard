@@ -102,6 +102,25 @@
             </objects>
             <point key="canvasLocation" x="1712.8" y="42.728635682158924"/>
         </scene>
+        <!--Web-->
+        <scene sceneID="Kii-vP-yOx">
+            <objects>
+                <viewController id="f8E-aI-D3F" customClass="WebViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eyh-D6-aQz"/>
+                        <viewControllerLayoutGuide type="bottom" id="TYc-vm-qsa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Gw8-ON-HIu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Web" id="0Fd-fQ-VQh"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SYk-0R-gOt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2401" y="47"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="BFO-nO-cjQ">
             <objects>
@@ -115,6 +134,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Big-g8-2eg"/>
                         <segue destination="E6y-eH-dQZ" kind="relationship" relationship="viewControllers" id="G8i-uL-IbK"/>
+                        <segue destination="f8E-aI-D3F" kind="relationship" relationship="viewControllers" id="0tQ-Mu-Ven"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XDC-Dc-vl6" userLabel="First Responder" sceneMemberID="firstResponder"/>
