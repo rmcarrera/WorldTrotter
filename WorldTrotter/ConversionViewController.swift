@@ -29,8 +29,10 @@ class ConversionViewController : UIViewController, UITextFieldDelegate {
     @IBAction func fahrenheitFieldEditingChanged(_ textField: UITextField){
         //celsiusLabel.text = textField.text
         
-        if let text = textField.text, let value = Double(text){
-            fahrenheitValue = Measurement(value: value, unit: .fahrenheit)
+        //if let text = textField.text, let value = Double(text){
+          //  fahrenheitValue = Measurement(value: value, unit: .fahrenheit)
+        if let text = textField.text, let number = numberFormatter.number(from: text){
+            fahrenheitValue = Measurement(value: number.doubleValue, unit: .fahrenheit)
         } else {
             fahrenheitValue = nil
         }
@@ -81,15 +83,22 @@ class ConversionViewController : UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         
-        let existingTestHasDecimalSeparator = textField.text?.range(of: ".")
-        let replacementTextHasDecimalSeparator = string.range(of: ".")
-        let numberAndDecimalInText = string.rangeOfCharacter(from: NSCharacterSet(charactersIn: "0123456789.") as CharacterSet)
+        //let existingTestHasDecimalSeparator = textField.text?.range(of: ".")
+        //let replacementTextHasDecimalSeparator = string.range(of: ".")
+        
+        let currentLocale = Locale.current
+        let decimalSeparator = currentLocale.decimalSeparator ?? "."
+        
+        let existingTextHasDecimalSeparator = textField.text?.range(of: decimalSeparator)
+        let replacementTextHasDecimalSeparator = string.range(of: decimalSeparator)
+        
+        let numberAndDecimalInText = string.rangeOfCharacter(from: NSCharacterSet(charactersIn: "0123456789.,") as CharacterSet)
         
         if string.characters.count == 0{
            return true
         }
         
-        if (existingTestHasDecimalSeparator != nil &&
+        if (existingTextHasDecimalSeparator != nil &&
             replacementTextHasDecimalSeparator != nil) || numberAndDecimalInText == nil {
             return false
         } else {
