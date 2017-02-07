@@ -61,12 +61,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Programatically added a button for the map view
         let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
         button.backgroundColor = UIColor.clear
-        button.setTitle("Current Location", for: .normal)
+        let locationString = NSLocalizedString("Current Location", comment: "Current Location Button")
+        button.setTitle(locationString, for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(pressButton(button:)), for: .touchDown)
         self.view.addSubview(button)
+        
+        //Pins
         let annotation1 = MKPointAnnotation()
         annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
         annotation1.title = "I AM HERE"
@@ -79,8 +83,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
         annotation3.title = "I VISITED HERE"
         mapView.addAnnotation(annotation3)
+        
         print("MapViewController did load")
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let location = locations[0]
         
@@ -91,6 +97,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.mapView.showsUserLocation = true
         locationManager.stopUpdatingLocation()
     }
+    
     func pressButton(button: UIButton){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
