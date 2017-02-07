@@ -10,8 +10,11 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController, MKMapViewDelegate{
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     var mapView: MKMapView!
+    
+    let locationManager = CLLocationManager()
+    
     
     func mapTypeChanged(_ segControl: UISegmentedControl){
         switch segControl.selectedSegmentIndex{
@@ -58,6 +61,12 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
+        button.backgroundColor = UIColor.clear
+        button.setTitle("Current Location", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector(pressButton(button:)), for: .touchDown)
+        self.view.addSubview(button)
         let annotation1 = MKPointAnnotation()
         annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
         annotation1.title = "I AM HERE"
@@ -72,8 +81,22 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         mapView.addAnnotation(annotation3)
         print("MapViewController did load")
     }
-    
-    //Location Delegate Methods
-    //func locationManager(manager: CLLocationManagerDelegate, didUpdateLocations locate)
-    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        let location = locations[0]
+        
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01,0.01)
+        let mylocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(mylocation, span)
+        mapView.setRegion(region, animated: true)
+        self.mapView.showsUserLocation = true
+        locationManager.stopUpdatingLocation()
+    }
+    func pressButton(button: UIButton){
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        
+        locationManager.startUpdatingLocation()
+        print("Pressed")
+    }
 }
