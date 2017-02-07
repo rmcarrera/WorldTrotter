@@ -8,8 +8,9 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController{
+class MapViewController: UIViewController, MKMapViewDelegate{
     var mapView: MKMapView!
     
     func mapTypeChanged(_ segControl: UISegmentedControl){
@@ -33,7 +34,7 @@ class MapViewController: UIViewController{
         view = mapView
         
         //let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
-        let standardString = NSLocalizedString("Standard", comment: "Stand map view")
+        let standardString = NSLocalizedString("Standard", comment: "Standard map view")
         let hybridString = NSLocalizedString("Hybrid", comment: "Hybrid map view")
         let satelliteString = NSLocalizedString("Satellite", comment: "Satellite map view")
         
@@ -57,7 +58,22 @@ class MapViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let annotation1 = MKPointAnnotation()
+        annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
+        annotation1.title = "I AM HERE"
+        mapView.addAnnotation(annotation1)
+        let annotation2 = MKPointAnnotation()
+        annotation2.coordinate = CLLocationCoordinate2DMake(16.555595, -96.027757)
+        annotation2.title = "I WAS BORN HERE"
+        mapView.addAnnotation(annotation2)
+        let annotation3 = MKPointAnnotation()
+        annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
+        annotation3.title = "I VISITED HERE"
+        mapView.addAnnotation(annotation3)
         print("MapViewController did load")
     }
+    
+    //Location Delegate Methods
+    //func locationManager(manager: CLLocationManagerDelegate, didUpdateLocations locate)
     
 }

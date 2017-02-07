@@ -105,7 +105,9 @@
         <scene sceneID="89U-GA-CI3">
             <objects>
                 <viewController id="E6y-eH-dQZ" customClass="MapViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="9cE-92-bNf"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="2nh-xw-fgT"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BsR-jP-zvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
