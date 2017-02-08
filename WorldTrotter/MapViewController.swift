@@ -108,4 +108,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.startUpdatingLocation()
         print("Pressed")
     }
+    
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+        <#code#>
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        <#code#>
+    }
 }
