@@ -63,10 +63,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         //Programatically added a button for the map view
         let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
-        button.backgroundColor = UIColor.clear
+        button.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         let locationString = NSLocalizedString("Current Location", comment: "Current Location Button")
         button.setTitle(locationString, for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(UIColor.blue, for: .normal)
         button.addTarget(self, action: #selector(pressButton(button:)), for: .touchDown)
         self.view.addSubview(button)
         
