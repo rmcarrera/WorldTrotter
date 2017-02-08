@@ -33,6 +33,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //create a map view
         mapView = MKMapView()
         
+        mapView.delegate = self
+        
         //set it as the view of this view controller
         view = mapView
         
