@@ -14,7 +14,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
-    
+    var doubleTap : Bool! = false
+    var isHighLighted:Bool = false
+
     
     func mapTypeChanged(_ segControl: UISegmentedControl){
         switch segControl.selectedSegmentIndex{
@@ -37,6 +39,48 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         //set it as the view of this view controller
         view = mapView
+        
+        let button:UIButton = UIButton(type: .system)
+        button.frame = CGRect.init(x: 210, y: 570, width: 120, height: 25)
+        button.setTitle("My Location", for: .normal)
+        //Programatically added a button for the map view
+        //let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
+        //button.buttonType = UIButtonType.roundedRect
+        button.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0).cgColor
+        //button.layer.borderColor = UIColor.blue.cgColor
+        //let locationString = NSLocalizedString("Current Location", comment: "Current Location Button")
+       // button.setTitle(locationString, for: .normal)
+        //button.setTitleColor(UIColor.blue, for: .normal)
+        button.addTarget(self, action: #selector(pressButton(button:)), for: .touchDown)
+        self.view.addSubview(button)
+        
+        
+        let pinsButton:UIButton = UIButton(type: .system)
+        pinsButton.frame = CGRect.init(x: 30, y: 570, width: 120, height: 25)
+        pinsButton.setTitle("Pins", for: .normal)
+        pinsButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        pinsButton.layer.cornerRadius = 5
+        pinsButton.layer.borderWidth = 1
+        pinsButton.layer.borderColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0).cgColor
+        self.view.addSubview(pinsButton)
+        pinsButton.addTarget(self, action: #selector(pressPins(button:)), for: .touchDown)
+        
+        
+        let annotation1 = MKPointAnnotation()
+        annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
+        annotation1.title = "I AM HERE"
+        mapView.addAnnotation(annotation1)
+        let annotation2 = MKPointAnnotation()
+        annotation2.coordinate = CLLocationCoordinate2DMake(16.555595, -96.027757)
+        annotation2.title = "I WAS BORN HERE"
+        mapView.addAnnotation(annotation2)
+        let annotation3 = MKPointAnnotation()
+        annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
+        annotation3.title = "I VISITED HERE"
+        mapView.addAnnotation(annotation3)
         
         //let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
         let standardString = NSLocalizedString("Standard", comment: "Standard map view")
@@ -64,16 +108,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad()
         //Programatically added a button for the map view
-        let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
+        /*let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
+        //button.buttonType = UIButtonType.roundedRect
         button.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        button.layer.cornerRadius = 10
+        button.layer.borderColor = UIColor.blue.cgColor
         let locationString = NSLocalizedString("Current Location", comment: "Current Location Button")
         button.setTitle(locationString, for: .normal)
         button.setTitleColor(UIColor.blue, for: .normal)
         button.addTarget(self, action: #selector(pressButton(button:)), for: .touchDown)
-        self.view.addSubview(button)
+        self.view.addSubview(button)*/
         
         //Pins
-        let annotation1 = MKPointAnnotation()
+       /* let annotation1 = MKPointAnnotation()
         annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
         annotation1.title = "I AM HERE"
         mapView.addAnnotation(annotation1)
@@ -84,7 +131,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let annotation3 = MKPointAnnotation()
         annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
         annotation3.title = "I VISITED HERE"
-        mapView.addAnnotation(annotation3)
+        mapView.addAnnotation(annotation3)*/
+        
+      
         
         print("MapViewController did load")
     }
@@ -101,19 +150,46 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func pressButton(button: UIButton){
-        locationManager.delegate = self
+        if (doubleTap == true) {
+            //Second Tap
+            loadView()
+            doubleTap = false
+        } else {
+            //First Tap
+            //button.backgroundColor = UIColor.blue
+            button.backgroundColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0)
+            button.setTitleColor(UIColor.white, for: .normal)
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            
+            locationManager.startUpdatingLocation()
+            doubleTap = true
+        }
+        /*locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         
-        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()*/
         print("Pressed")
     }
+    func pressPins(button: UIButton){
+        if isHighLighted == true{
+            loadView()
+            isHighLighted = false
+        }
+        else{
+            button.backgroundColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0)
+            button.setTitleColor(UIColor.white, for: .normal)
+            isHighLighted = true
+        }
+    }
     
-    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+    /*func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
         <#code#>
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         <#code#>
-    }
+    }*/
 }
