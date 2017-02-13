@@ -16,7 +16,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let locationManager = CLLocationManager()
     var doubleTap : Bool! = false
     var isHighLighted:Bool = false
-
+    let annotation1 = MKPointAnnotation()
+    let annotation2 = MKPointAnnotation()
+    let annotation3 = MKPointAnnotation()
+    var pinCount = 0
     
     func mapTypeChanged(_ segControl: UISegmentedControl){
         switch segControl.selectedSegmentIndex{
@@ -44,8 +47,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         button.frame = CGRect.init(x: 210, y: 570, width: 120, height: 25)
         button.setTitle("My Location", for: .normal)
         //Programatically added a button for the map view
-        //let button = UIButton(frame: CGRect(x: 210, y: 550, width: 140, height: 44))
-        //button.buttonType = UIButtonType.roundedRect
         button.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         button.layer.cornerRadius = 5
         button.layer.borderWidth = 1
@@ -69,17 +70,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pinsButton.addTarget(self, action: #selector(pressPins(button:)), for: .touchDown)
         
         
-        let annotation1 = MKPointAnnotation()
         annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
-        annotation1.title = "I AM HERE"
+        annotation1.title = "High Point University"
         mapView.addAnnotation(annotation1)
-        let annotation2 = MKPointAnnotation()
         annotation2.coordinate = CLLocationCoordinate2DMake(16.555595, -96.027757)
-        annotation2.title = "I WAS BORN HERE"
+        annotation2.title = "Oaxaca, Mexico"
         mapView.addAnnotation(annotation2)
-        let annotation3 = MKPointAnnotation()
         annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
-        annotation3.title = "I VISITED HERE"
+        annotation3.title = "Disney World"
         mapView.addAnnotation(annotation3)
         
         //let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
@@ -152,18 +150,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func pressButton(button: UIButton){
         if (doubleTap == true) {
             //Second Tap
+            pinCount = 0
             loadView()
             doubleTap = false
         } else {
             //First Tap
-            //button.backgroundColor = UIColor.blue
             button.backgroundColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0)
             button.setTitleColor(UIColor.white, for: .normal)
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
             
+            
             locationManager.startUpdatingLocation()
+            pinCount = 0 //reset pins
             doubleTap = true
         }
         /*locationManager.delegate = self
@@ -173,23 +173,68 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.startUpdatingLocation()*/
         print("Pressed")
     }
+    
+   func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+        // get the particular pin that was tapped
+        let pinToZoomOn = view.annotation
+        
+        // optionally you can set your own boundaries of the zoom
+        let span = MKCoordinateSpanMake(0.5, 0.5)
+        
+        // or use the current map zoom and just center the map
+        // let span = mapView.region.span
+        
+        // now move the map
+        let region = MKCoordinateRegion(center: pinToZoomOn!.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
     func pressPins(button: UIButton){
-        if isHighLighted == true{
+       /* if isHighLighted == true{
             loadView()
             isHighLighted = false
-        }
-        else{
+        }*/
+       // else{
+            //let region = MKCoordinateRegion(
+            let span = MKCoordinateSpanMake(0.5, 0.5)
+            var region: MKCoordinateRegion
+            if pinCount == 0{
+                //doubleTap = false;//reset to current location
+                region = MKCoordinateRegion(center: annotation1.coordinate, span: span)
+                mapView.setRegion(region, animated: true)
+                pinCount += 1
+                print("1")
+            }
+            else if pinCount == 1{
+                //doubleTap = false;
+                region = MKCoordinateRegion(center: annotation2.coordinate, span: span)
+                mapView.setRegion(region, animated: true)
+                pinCount += 1
+                print("2")
+            }
+            else if pinCount == 2 {
+                //doubleTap = false;
+                region = MKCoordinateRegion(center: annotation3.coordinate, span: span)
+                mapView.setRegion(region, animated: true)
+                pinCount += 1
+                print("3")
+            }
+            else if doubleTap == true {
+                doubleTap = false
+                pinCount = 0
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.startUpdatingLocation()
+            }
+            else{
+                pinCount = 0
+                loadView()
+            }
             button.backgroundColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0)
             button.setTitleColor(UIColor.white, for: .normal)
             isHighLighted = true
-        }
+        //}
     }
     
-    /*func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-        <#code#>
-    }
-    
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        <#code#>
-    }*/
 }
