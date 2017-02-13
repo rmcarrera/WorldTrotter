@@ -12,7 +12,8 @@ import CoreLocation
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     var mapView: MKMapView!
-    
+    //self.mapView.centerCoordinates
+    //self.mapView.setCenter
     let locationManager = CLLocationManager()
     var doubleTap : Bool! = false
     var isHighLighted:Bool = false
@@ -70,15 +71,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pinsButton.addTarget(self, action: #selector(pressPins(button:)), for: .touchDown)
         
         
-        annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
+        /*annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
         annotation1.title = "High Point University"
-        mapView.addAnnotation(annotation1)
-        annotation2.coordinate = CLLocationCoordinate2DMake(16.555595, -96.027757)
+        mapView.addAnnotation(annotation1)*/
+        /*annotation2.coordinate = CLLocationCoordinate2DMake(16.555595, -96.027757)
         annotation2.title = "Oaxaca, Mexico"
-        mapView.addAnnotation(annotation2)
-        annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
+        mapView.addAnnotation(annotation2)*/
+       /* annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
         annotation3.title = "Disney World"
-        mapView.addAnnotation(annotation3)
+        mapView.addAnnotation(annotation3)*/
         
         //let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
         let standardString = NSLocalizedString("Standard", comment: "Standard map view")
@@ -97,6 +98,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let margins = view.layoutMarginsGuide
         let leadingConstriant = segmentedControl.leadingAnchor.constraint(equalTo: margins.leadingAnchor)
         let trailingConstriant = segmentedControl.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+        
+        /*let bottomConst = button.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: -8)
+        bottomConst.isActive = true
+        let  leadC = button.leadingAnchor.constraint(equalTo: margins.leadingAnchor)
+        leadC.isActive = true*/
+        
         
         topConstriant.isActive = true
         leadingConstriant.isActive = true
@@ -201,6 +208,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             var region: MKCoordinateRegion
             if pinCount == 0{
                 //doubleTap = false;//reset to current location
+                annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
+                annotation1.title = "High Point University"
+                mapView.addAnnotation(annotation1)
                 region = MKCoordinateRegion(center: annotation1.coordinate, span: span)
                 mapView.setRegion(region, animated: true)
                 pinCount += 1
@@ -208,6 +218,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
             else if pinCount == 1{
                 //doubleTap = false;
+                annotation2.coordinate = CLLocationCoordinate2DMake(16.555595, -96.027757)
+                annotation2.title = "Oaxaca, Mexico"
+                mapView.addAnnotation(annotation2)
                 region = MKCoordinateRegion(center: annotation2.coordinate, span: span)
                 mapView.setRegion(region, animated: true)
                 pinCount += 1
@@ -215,6 +228,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
             else if pinCount == 2 {
                 //doubleTap = false;
+                annotation3.coordinate = CLLocationCoordinate2DMake(28.385261, -81.563498)
+                annotation3.title = "Disney World"
+                mapView.addAnnotation(annotation3)
                 region = MKCoordinateRegion(center: annotation3.coordinate, span: span)
                 mapView.setRegion(region, animated: true)
                 pinCount += 1
