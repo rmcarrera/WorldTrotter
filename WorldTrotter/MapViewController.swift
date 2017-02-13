@@ -8,11 +8,15 @@
 
 import UIKit
 import MapKit
-import CoreLocation
+//import CoreLocation
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
+class MapViewController: UIViewController, MKMapViewDelegate{//, CLLocationManagerDelegate{
     var mapView: MKMapView!
-    //self.mapView.centerCoordinates
+    var curLoc: CLLocationCoordinate2D!
+    //curLoc = self.mapView.centerCoordinate
+    //mapView delegate
+    //mapview will start locating
+
     //self.mapView.setCenter
     let locationManager = CLLocationManager()
     var doubleTap : Bool! = false
@@ -39,10 +43,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //create a map view
         mapView = MKMapView()
         
-        mapView.delegate = self
+        //mapView.delegate = self
         
         //set it as the view of this view controller
         view = mapView
+        
+        mapView.delegate = self
+        
+        //curLoc = self.mapView.centerCoordinate
         
         let button:UIButton = UIButton(type: .system)
         button.frame = CGRect.init(x: 210, y: 570, width: 120, height: 25)
@@ -52,7 +60,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         button.layer.cornerRadius = 5
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0).cgColor
-        //button.layer.borderColor = UIColor.blue.cgColor
         //let locationString = NSLocalizedString("Current Location", comment: "Current Location Button")
        // button.setTitle(locationString, for: .normal)
         //button.setTitleColor(UIColor.blue, for: .normal)
@@ -143,7 +150,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         print("MapViewController did load")
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+    /*func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let location = locations[0]
         
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01,0.01)
@@ -151,6 +158,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let region:MKCoordinateRegion = MKCoordinateRegionMake(mylocation, span)
         mapView.setRegion(region, animated: true)
         self.mapView.showsUserLocation = true
+        locationManager.stopUpdatingLocation()
+    }*/
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01,0.01)
+        let mylocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(userLocation.coordinate.latitude,userLocation.coordinate.longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(mylocation, span)
+        mapView.setRegion(region, animated: true)
+       // self.mapView.showsUserLocation = true
         locationManager.stopUpdatingLocation()
     }
     
@@ -164,12 +180,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             //First Tap
             button.backgroundColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0)
             button.setTitleColor(UIColor.white, for: .normal)
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+           // locationManager.delegate = self
+            //locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
             
-            
-            locationManager.startUpdatingLocation()
+            //mapView.
+            //locationManager.startUpdatingLocation()
+            mapView.showsUserLocation = true
             pinCount = 0 //reset pins
             doubleTap = true
         }
@@ -239,12 +256,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             else if doubleTap == true {
                 doubleTap = false
                 pinCount = 0
-                locationManager.delegate = self
-                locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                locationManager.startUpdatingLocation()
+                //locationManager.delegate = self
+                //locationManager.desiredAccuracy = kCLLocationAccuracyBest
+               // locationManager.startUpdatingLocation()
             }
             else{
                 pinCount = 0
+               // region = MKCoordinateRegion(center: curLoc, span: span)
+                //self.mapView.setRegion(region, animated: true)
+                //let curLoc = self.mapView.centerCoordinate
+                //self.mapView.setCenter(curLoc, animated: true)
+                //mapView.centerCoordinate
                 loadView()
             }
             button.backgroundColor = UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0)
