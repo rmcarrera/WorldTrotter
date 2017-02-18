@@ -47,7 +47,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         
         locationManager.requestAlwaysAuthorization()//triggers a message to allow user of app access to user loc
         
-        
         let button = UIButton.init(type: .system)
         initLocButton(button)
         
@@ -86,6 +85,9 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         print("MapViewController did load")
     }
     
+    /* This function initalizes a button that will allow the user to zoom into their current location. 
+     * The form of the button and constriants are set in this function.
+     */
     func initLocButton(_ button: UIButton)
     {
         button.setTitle("My Location", for: .normal)
@@ -109,6 +111,9 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         leadConst.isActive = true
     }
     
+    /* This function initalizes a button that will allow the user to display pins when selected. The form of the
+     * button and constriants are set in this function.
+     */
     func initPinButton(_ button: UIButton)
     {
         button.setTitle("Pins", for: .normal)
@@ -131,6 +136,9 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         
     }
     
+    /* This function initalizes the pins that will be displayed in the mapView once the Pins Button is 
+     * selected by the user. The pins are stored into an array named pins.
+     */
     func initPins(){
         annotation1.coordinate = CLLocationCoordinate2DMake(35.973128, -79.994954)
         annotation1.title = "High Point University"
@@ -150,12 +158,15 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01,0.01)
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation.coordinate, span)
+        let Cspan:MKCoordinateSpan = MKCoordinateSpanMake(0.01,0.01)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation.coordinate, Cspan)
         mapView.setRegion(region, animated: true)
+        //mapView.
         
     }
-    
+    func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
+        
+    }
   /*  func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
         let span:MKCoordinateSpan = MKCoordinateSpanMake(CurSpan.latitudeDelta,CurSpan.longitudeDelta)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(curLoc, span)
@@ -173,12 +184,12 @@ class MapViewController: UIViewController, MKMapViewDelegate{
          * did not occur.
          */
         if mapView.showsUserLocation == false && isPinUsed == false {
-            curLoc = self.mapView.centerCoordinate//captures current coordinates
-            CurSpan = self.mapView.region.span//captures current zoom level
+            curLoc = mapView.centerCoordinate//captures current coordinates
+            CurSpan = mapView.region.span//captures current zoom level
             print(curLoc)
         }
         
-        if (doubleTap == true && isPinUsed == false) {//pinCount == 0) {//Second tap to turn off my location
+        if (doubleTap == true && isPinUsed == false) {//Second tap to turn off my location
             button.backgroundColor = UIColor.white.withAlphaComponent(0.5)
             button.setTitleColor(UIColor.init(red: 14.0/255, green: 122.0/255, blue: 254.0/255, alpha: 1.0), for: .normal)
             let span:MKCoordinateSpan = MKCoordinateSpanMake(CurSpan.latitudeDelta,CurSpan.longitudeDelta)
@@ -194,19 +205,25 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             mapView.showsUserLocation = true //turns on user location
             doubleTap = true
         }
+        /*if mapView.showsUserLocation = false {
+         mapView.showsUserLocation = true
+         }
+         */
         print("Pressed")
     }
     
     func pressPins(button: UIButton){
-        if pinCount == 0 && doubleTap == false{//&& mapView.showsUserLocation == false {
+        if pinCount == 0 && doubleTap == false{
             mapView.showsUserLocation = true
-            curLoc = self.mapView.centerCoordinate
-            CurSpan = self.mapView.region.span
+            curLoc = mapView.centerCoordinate
+            CurSpan = mapView.region.span
             print(curLoc)
         }
+        
         mapView.showsUserLocation = false
         let span = MKCoordinateSpanMake(0.5, 0.5)
         var region: MKCoordinateRegion
+        
         if pinCount == 0{
             isPinUsed = true
             mapView.addAnnotation(pins[0])
@@ -233,16 +250,10 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             pinCount += 1
             print("3")
         }
-      /*  else if doubleTap == true {
-            isPinUsed = false
-            mapView.removeAnnotations(pins)
-            mapView.showsUserLocation = true
-            pinCount = 0
-        }*/
         else{
             isPinUsed = false
             pinCount = 0//reset to beginning of pins
-            mapView.removeAnnotations(pins)
+            mapView.removeAnnotations(pins)//remove any pins in view
             let span:MKCoordinateSpan = MKCoordinateSpanMake(CurSpan.latitudeDelta,CurSpan.longitudeDelta)
             let region:MKCoordinateRegion = MKCoordinateRegionMake(curLoc, span)
             mapView.setRegion(region, animated: true)
