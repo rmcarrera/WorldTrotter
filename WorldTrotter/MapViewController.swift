@@ -155,6 +155,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         print(pins[2].title!)
     }
     
+    
     /* This function will tell the delegate that the location of the user was updated. The map will zoom
      * into the user's current location.
      */
@@ -255,7 +256,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             pinCount = 0//reset to beginning of pins
             mapView.removeAnnotations(pins)//remove any pins in view
             let span:MKCoordinateSpan = MKCoordinateSpanMake(CurSpan.latitudeDelta,CurSpan.longitudeDelta)
-            let region:MKCoordinateRegion = MKCoordinateRegionMake(curLoc, span)
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(curLoc, span)//back to default location
             mapView.setRegion(region, animated: true)
         }
     }
